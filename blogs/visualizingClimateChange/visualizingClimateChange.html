@@ -1,0 +1,331 @@
+<html>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+    @import url("https://fonts.googleapis.com/css?family=Quicksand");
+    @import url("https://fonts.googleapis.com/css?family=Relaway");
+
+    body {
+        margin-right: 5em;
+        margin-left: 5em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        padding: 8em;
+    }
+
+    @media handheld,
+    only screen and (max-width: 769px) {
+        body {
+            margin: 1em;
+            padding: 0.5em;
+            padding-top: 4em;
+        }
+    }
+
+    h2,
+    h3,
+    h4,
+    p,
+    ul {
+        word-wrap: break-word;
+        font-family: 'Relaway', sans-serif;
+    }
+
+    h1 {
+        font-family: 'Source Sans Pro';
+        font-size: 3em;
+    }
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 99%;
+        max-height: 99%;
+    }
+
+    pre {
+        overflow: auto;
+    }
+
+    #homeButton {
+        font-family: 'Montserrat', sans-serif;
+        display: inline-block;
+        padding: 5px 20px;
+        font-weight: 300;
+        background-color: rgba(122, 178, 243, 0.548);
+        color: rgb(23, 42, 124);
+        border-radius: 40px;
+        text-decoration: none;
+        -webkit-transition: 0.2s all;
+        transition: 0.2s all;
+    }
+
+    #homeButton:hover {
+        opacity: 0.8;
+    }
+</style>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Visualizing climate change using Azure Notebooks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="description"
+        content="Learning how to use Azure Notebooks to visualize climate change by utilizing basic ML libraries">
+    <meta name="author" content="T.T. Ouzounelis Kavlakonis">
+    <meta type="image" property="og:image"
+        content="https://storage.googleapis.com/www.theodorosouzounellis.com/images/blog/azureNotebooks.png">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@OuzounellisT" />
+    <meta name="twitter:title" content="Visualizing Climate Change using Azure Notebooks" />
+    <meta name="twitter:description"
+        content="A tutorial on how to use Azure Notebooks to visualize Climate Change using basic ML Libraries." />
+    <meta name="twitter:image"
+        content="https://storage.googleapis.com/www.theodorosouzounellis.com/images/blog/azureNotebooks.png" />
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: #e3f2fd;">
+        <a id="homeButton" class="navbar-brand" data-value="home" href="/index.html">
+            Back to homepage
+        </a>
+        
+    </nav>
+    <h1>Visualizing climate change using Azure Notebooks</h1>
+    <a><img src="./images/azureNotebooks.png"></a>
+    <h2>A bit of a background</h2>
+    <p>In today’s blog I will be sharing my experience of using Azure/Jupyter notebooks to visualize climate data. But
+        what exactly is a Jupyter notebook?</p>
+    <p>“A Jupyter/Azure Notebook is an open-source web application that allows you to create and share documents that
+        contain
+        live code, equations, visualizations and narrative text”. In practice what this allows is to be able to run code
+        online and at the same time have normal text and document type attachments alongside it. This is very convenient
+        for all types of enthusiasts and professionals alike.</p>
+    <h2>Excited to dive into it? Let’s go!</h2>
+    <p>Do you think it takes an expert to go through all this? Well let’s just say that in less than 45’ you can become
+        an expert yourself.</p>
+    <h2>1. First things first: Setting up:</h2>
+    <p>All we need to set up is a Microsoft account so if you do not have one please create one to proceed. You can do
+        so at: <a href="https://account.microsoft.com/account">"https://account.microsoft.com/account"</a>. Having that
+        set up all you need to do now is to log
+        into Azure Notebooks <a href="https://notebooks.azure.com">"https://notebooks.azure.com"</a>.
+        <br></br>
+        Finally you also need to download the resource files that we are going to be using. You can do so by downloading
+        the zip file <a href="https://a4r.blob.core.windows.net/public/notebook-resources.zip">here</a>
+    </p>
+    <h2>2. The lab experience: Put on your lab coats and get to work!:</h2>
+    <h3>2.1: Setting up the notebook:</h3>
+    <p>The lab in itself was fairly short and self-explanatory in its instructions so the main focus will be on the more
+        interesting, discussion-friendly bits.
+        <br></br>
+        After we set up our Notebook as instructed we select our programming language as Python 3.5.
+        <br></br>
+        Python is what we call a high-level programming language and its main advantage is that it has quite a natural
+        syntax writing (the equivalent of grammar in programming). Hence this makes it quite easy to understand
+        especially for someone with no programming experience.</p>
+    <a><img src="images/image1.png"></a>
+    <h3>2.2: The Code</h3>
+    <p>As in everything in real life when we want to build something, we need our toolbox. In programming those our
+        called libraries. Libraries provide certain functions (our tools if you like) in order to make the process of
+        achieving our goal easier. As such we don’t have to reinvent the wheel!
+        <br></br>
+        Hence we start of by importing the libraries we will be using in this laboratory.</p>
+
+    <pre class="prettyprint lang-py"><code>
+    import matplotlib.pyplot as plt
+    import numpy as np
+    from sklearn.linear_model import LinearRegression
+    import seaborn as sns; sns.set()
+    </code></pre>
+    <p>
+        These are:
+        <ul>
+            <li><b>Matplotlib.pyplot</b>: used to create axis and in general plot data in different formats and curve
+                fitting
+            </li>
+            <li><b>Numpy</b>: numpy is a very standard library used in python. It is used for numerically manipulating
+                large
+                sets of number. It is very efficient and thus preferred</li>
+            <li><b>Sklearn</b>: This library provides simple tools for data mining and data analysis via the use of
+                machine
+                learning</li>
+            <li><b>Seaborn</b>: This is based upon matplotlib and it provides a high-level interface for drawing
+                attractive
+                statistical graphics.</li>
+        </ul>
+        After importing the .csv files we proceed on creating a scatter plot of the data using the simple functions
+        provided by the matplotlib library.
+    </p>
+    <pre class="prettyprint lang-py"><code>
+    #Import Data
+    yearsBase, meanBase = np.loadtxt('5-year-mean-1951-1980.csv', delimiter=',', usecols=(0, 1), unpack=True)
+    years, mean = np.loadtxt('5-year-mean-1882-2014.csv', delimiter=',', usecols=(0, 1), unpack=True)
+    </code></pre>
+    <pre class="prettyprint lang-py"><code>
+    #Create a Scatter plot
+    plt.scatter(yearsBase, meanBase)
+    plt.title('scatter plot of mean temp difference vs year')
+    plt.xlabel('years', fontsize=12)
+    plt.ylabel('mean temp difference', fontsize=12);
+    plt.show()
+    </code></pre>
+    <a><img src="images/image3.png"></a>
+    <p>Now that we have our scatter plot we need to analyse the data. A very useful property used extensively for
+        predictive modelling is that of curve fitting. This is a method by which we try and identify a trend matching a
+        specific profile. In this lab we are implementing a linear regression fit in three different ways.</p>
+    <h4>Method 1: Matplotlib</h4>
+    <p>This method uses the matplotlib library to fit a line on the scatter plot data. This is done by first calling
+        the polyfit() function which fits a polynomial curve (here is 1 as specified in the parameter) to the data.
+        Also, in order to draw the line seen on the plot we do have to declare a separate “line function”.
+    </p>
+    <pre class="prettyprint lang-py"><code>
+    # Creates a linear regression from the data points
+    m,b = np.polyfit(yearsBase, meanBase, 1)
+    
+    # This is a simple y = mx + b line function
+    def f(x):
+        return m*x + b
+    
+    # This generates the same scatter plot as before, but adds a line plot using the function above
+    plt.scatter(yearsBase, meanBase)
+    plt.plot(yearsBase, f(yearsBase))
+    plt.title('scatter plot of mean temp difference vs year')
+    plt.xlabel('years', fontsize=12)
+    plt.ylabel('mean temp difference', fontsize=12);
+    plt.show()
+    
+    # Prints text to the screen showing the computed values of m and b
+    print(' y = {0} * x + {1}'.format(m, b))
+    plt.show()
+    </code></pre>
+    <p>Hence, we can see how matplotlib data fitting can be used in generally simple cases rather than very complex
+        ones. It is still a very powerful tool to use though.
+    </p>
+    <a><img src="images/image2.jpg"></a>
+    <h4>Method 2: Scikit-learn</h4>
+    <pre class="prettyprint lang-py"><code>
+    # Pick the Linear Regression model and instantiate it
+    model = LinearRegression(fit_intercept=True)
+    
+    # Fit/build the model
+    model.fit(yearsBase[:, np.newaxis], meanBase)
+    mean_predicted = model.predict(yearsBase[:, np.newaxis])
+    
+    # Generate a plot like the one in the previous exercise 
+    plt.scatter(yearsBase, meanBase)
+    plt.plot(yearsBase, mean_predicted)
+    plt.title('scatter plot of mean temp difference vs year')
+    plt.xlabel('years', fontsize=12)
+    plt.ylabel('mean temp difference', fontsize=12);
+    plt.show()
+    
+    print(' y = {0} * x + {1}'.format(model.coef_[0], model.intercept_))
+    </code></pre>
+    <a><img src="images/image6.jpg"></a>
+    <p>The advantage of scikit-learn is that it contains different models of data fitting which are usually convenient
+        to use. This is done using the power of Machine Learning which is built into the library itself.In this example
+        since we wanted a linear fit we imported just the linear model. As such the code is pretty simple comprising of
+        less function calls than the matplotlib example. As such one can see how scikit-learn can be applied to data
+        analysis more universally and more easily than matplotlib concerning more complex case. As it was expected the
+        result is exactly the same as the previous one.</p>
+    <h4>Method 3: Seaborn</h4>
+    <pre class="prettyprint lang-py"><code>
+    plt.scatter(years, mean)
+    plt.title('scatter plot of mean temp difference vs year')
+    plt.xlabel('years', fontsize=12)
+    plt.ylabel('mean temp difference', fontsize=12);
+    sns.regplot(yearsBase, meanBase)
+    plt.show()
+    </code></pre>
+    <a><img src="images/image9.jpg"></a>
+    <p>Seaborn is an open source library specific to statistical visualization. Hence Seaborn provides very high
+        performance as conveniently as possible. This can easily be seen from the little amount of code needed to do the
+        same thing as on the previous two methods. A projection area was also added to show where points are expected to
+        lie around this linear regression.</p>
+    <h3>2.3: Presentation</h3>
+    <p>An important aspect of the Microsoft Azure environment and the Microsoft philosophy is the aspect of
+        collaboration. In today’s fast changing world collaboration helps us move forward. In order to reflect that
+        Azure Notebooks has the functionality of converting your notebook to an easily shareable link or a presentation
+        if needed. This is done very easily by clicking at the following:</p>
+    <a><img src="images/image7.jpg"></a>
+    <p>And then setting each cell to be either a Fragment (Code) or a Slide (Text). Clicking slideshow after having done
+        that will start a slide show of your notebook. This is very convenient for professional presentation which
+        involved the use of such technologies.</p>
+    <h3>2.4: Sharing is Caring</h3>
+    <p>
+        Additionally, you can also as mentioned share the notebook with your peers and/or collaborators by clicking the
+        share button at the notebooks page.
+    </p>
+    <a><a><img src="images/image5.jpg"></a></a>
+    <h2>
+        3. The experience/reflection
+    </h2>
+    <p>
+        This lab exercise was a very nice experience as it highlights the core principles we all as software enthusiasts
+        and hobbyists share:
+        <br></br>
+        <b style="font-style:italic">Principle 1</b>: There are always many different approaches and solutions to each
+        problem. This was demonstrated by
+        all the different methods that we used to create the line regression for the scatter plot.
+
+
+        This is a core principle as it shows that different people come up with different solutions and it the goal is
+        for each one to improve and discuss with one another to find the best one.
+        <br></br>
+        <b style="font-style:italic">Principle 2</b>: Leading from the last principle in order to achieve the goal of
+        finding the best solution there is
+        a need for people to collaborate and exchange their ideas with their peers. Different people with different
+        experiences think about a problem in the different way and contribute in their own unique way towards the
+        solution. As such collaboration and teamwork are very crucial values for todays professional environment.
+        Microsoft has been committed to that idea and encourages collaboration and the exchange of ideas through its
+        ease of sharing as demonstrated in the laboratory with Azure Notebooks.
+        <br></br>
+        Finally, I hope that the skills cultivated in this lab gave you the eagerness to explore more in the world of
+        machine learning and Python programming as the applications are endless. As such here are some interesting
+        projects to undergo:
+        <br></br>
+        <b style="font-style:italic">Suggested Project 1:</b>
+        Create a model to predict the trend of a stock price over a month and compare the performance of different
+        models.
+        <br></br>
+        <b style="font-style:italic">Suggested Project 2:</b>
+        Create a Jupyter Notebook application to investigate how population is changing over the years in developed v
+        developing countries.
+        <br></br>
+        Got a project idea of your own? Definitely do that! Do not feel restricted to those projects pursue your
+        curiosity and embrace it. Please feel free to share with the rest of the community!
+    </p>
+    <h2>
+        Conclusion
+    </h2>
+    <p>
+        I hope that you fellow life-learner have finished this blog feeling empowered and ready to take a new challenge
+        even harder than the one just completed. As such I would like to say a very big thank you for reading my blog
+        and I really hope to see you back on my next one!
+        <br></br>
+
+        This is the link to my completed library: <a
+            href="https://notebooks.azure.com/theo8299/libraries/notebook-hol"></a>. Also feel free to check other
+        awesome labs at <a
+            href="https://github.com/Microsoft/computerscience/blob/master/Labs/AI%20and%20Machine%20Learning/Azure%20Notebooks/Azure%20Notebooks.md">https://github.com/Microsoft/computerscience/blob/master/Labs/AI%20and%20Machine%20Learning/Azure%20Notebooks/Azure%20Notebooks.md</a>
+        <br></br>
+        Lots of engineering love,
+        <br></br>
+        Theo
+    </p>
+
+    <h2>
+        Bibliography:
+    </h2>
+    <p>
+        [1] "Web App Service - Microsoft Azure". Microsoft.
+        <br></br>
+        [2] "Microsoft Azure Machine Learning combines power of comprehensive machine learning with benefits of cloud".
+        blogs.microsoft.com. June 16, 2014.
+        <br></br>
+    </p>
+</body>
+
+</html>
