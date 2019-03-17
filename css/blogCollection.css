@@ -1,0 +1,82 @@
+/*This file contains CSS code regarding the ./blog.html page which is a page dedicated to maintaining and showcasing the different blog posts */
+
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Oleo+Script');
+html, h1, h2, h3, h4, h5, h6, a {
+    font-family: "Raleway";
+}
+
+/*header style*/
+
+.header {
+    background-image: url('../images/headerback5.jpg');
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    padding: 120px 0 120px 0;
+}
+
+.des-welcome {
+    position: absolute;
+    top: 20%;
+    bottom: 10%;
+    margin: 0.2em;
+    padding: 1em;
+}
+
+.des-welcome h1 {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+
+.des-welcome p {
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    width: 50%;
+    line-height: 1.5;
+}
+
+
+/*Blog*/
+
+.blog {
+    margin: 0em;
+    padding: 0.5em;
+    position: relative;
+}
+
+
+.blog h1 {
+    color: rgba(32, 32, 32, 0.815);
+    margin: 0em;
+    padding: 0.5em;
+    font-family: 'Oleo Script', Helvetica, sans-serif;
+    font-size: 4em;
+}
+
+
+
+/* phones*/
+
+@media handheld, only screen and (max-width: 769px) {
+    .header {
+        background-attachment: scroll !important;
+        background-position: center center !important;
+    }
+    .about {
+        background-attachment: scroll !important;
+        background-position: center center !important;
+    }
+    .work-exp {
+        background-attachment: scroll !important;
+        background-position: center center !important;
+    }
+    .contact-form {
+        background-attachment: scroll !important;
+        background-position: center center !important;
+    }
+}
