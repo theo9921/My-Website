@@ -1,0 +1,153 @@
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Python in Finance Pt1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="description" content="Learn how to use Python to obtain and analyze financial data">
+    <meta name="author" content="T.T. Ouzounelis Kavlakonis">
+    <meta type="image" property="og:image" content="https://storage.googleapis.com/www.theodorosouzounellis.com/images">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@OuzounellisT" />
+    <meta name="twitter:title" content="Python for Finance Pt1" />
+    <meta name="twitter:description" content="Learn how to use Python to obtain and analyze financial data." />
+    <meta name="twitter:image" content="" />
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/css/blog.css">
+</head>
+
+<bod>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: #e3f2fd;">
+        <a id="homeButton" class="navbar-brand" data-value="home" href="/index.html">
+            Back to homepage
+        </a>
+    </nav>
+
+    <h1>Python in Finance Part 1</h1>
+    <h2>What will you learn in this series?</h2>
+    <p>The goal of this series is to showcase how to collect and analyze financial data. Throughout the tutorial you
+        will learn how to use Pandas Dataframes to obtain and maipulate data and then apply those principle to visualize Markowitz Portfolio Optimization</p>
+    <h2>Before Starting</h2>
+    <p>Before you start make sure you have the following libraries installed on your system</p>
+    <ul>
+        <li>pandas</li>
+        <li>numpy</li>
+        <li>matplotlib</li>
+    </ul>
+    <p>If you do not have those libraries you can instal them by running
+        <code>pip install pandas numpy matplotlib</code> inside your python terminal. Alternatevely if you are using
+        conda you can use <code>conda install pandas numpy matplotlib</code> to install the packages</p>
+    <p></p>
+    <h2>1. Getting Financial Information</h2>
+    <p>To start off we are going to import the needed libraries</p>
+    <pre class="prettyprint lang-py"><code>
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import pandas as pd
+    import pandas_datareader.data as web
+    import datetime as dt  
+    import os
+    from dateutil.relativedelta import relativedelta
+    </code></pre>
+    <p>Now we can start by writing our first function which will get financial data from Yahoo!. Do do that we pass a list of tickers and the timeframe in which we are interested (i.e start and end dates). Additionally we would like to save the data locally in a .csv file so we can access it easily after.</p>
+    <pre class="prettyprint lang-py"><code>
+    #function to get data and save it locally
+    def get_data_from_yahoo(tickers, startDate, endDate):
+        # Create a path to save all the stock data as .csv files
+        if not os.path.exists('./stock_csvs'):
+            os.makedirs('./stock_csvs')
+    
+        # save data for the listed companies
+        for ticker in tickers:
+            #if the file does not exist create it
+            if not os.path.exists('./stock_csvs/{}.csv'.format(ticker)):
+                df = web.DataReader(ticker, 'yahoo', startDate, endDate)
+                df.to_csv('./stock_csvs/{}.csv'.format(ticker))
+            #if the file exists update it
+            else:
+                os.remove('./stock_csvs/{}.csv'.format(ticker))
+                df = web.DataReader(ticker, 'yahoo', startDate, endDate)
+                df.to_csv('./stock_csvs/{}.csv'.format(ticker))
+    </code></pre>
+    <p>Now we are ready to try out the code. We can do that by</p>
+    <pre class="prettyprint lang-py"><code>
+    tickers = ['AAPL', 'TSLA', 'GOOGL', 'MSFT']
+
+    """The dates are represented by strings of the format YYYY-MM-DD. You can also use the datetime 
+    libary to get stock data for some time prior to now."""
+    #Uncomment accordingly to the method you want (either direct string or using datetime library)
+    endDate = '2019-02-19' #using direct string format
+    endDate = endDate = dt.datetime.now().strftime("%Y-%m-%d") #using datetime library
+    startDate = '2014-02-19'
+    startDate = (dt.datetime.now() + relativedelta(years=-5)).strftime("%Y-%m-%d") #set start date 5 years back
+
+    get_data_from_yahoo(tickers, startDate, endDate)
+    </code></pre>
+    <p>Now you can see that our new /stock_csvs directory is starting to populate.</p>
+    <p>Now that we have our data saved and stored we can begin exploring how to read it and analyze it using Pandas Dataframes. Pandas are very widely used in industry and is a very good library to get started with any kind of data analysis. </p>
+    <h2>2. Getting Familiar with our data</h2>
+    <p>In this section we will talk about how to convert the .csv files into panda dataframes and then learn about how we can get information about our data and how to manipulate it. This is a very usuful skill to have since in order to properly analyze the data in a meaningful way we first need to understand how our data looks like and precisely what we need to get out of it</p>
+    <p>We will start off by learning how to read one .csv file and then use that as a template for a function that can do that with any of the .csv files. To start of we need to initiate a dataframe object. It is easy to think of a Dataframes as a data table which you can manipulate but also combine with other tables. To initialize a dataframe:</p>
+    <pre class = "prettyprint lang-py"><code>df = pd.DataFrame()</code></pre>
+    <p>Now it is time to populate our dataframe using the values saved on our .csv file. Hopefully for us the pandas library gives includes a special function for that which prses the given .csv file to a dataframe object. To do so select the stock you want (In this example I selected Microsoft) and run the following:</p>
+    <pre class = "prettyprint lang-py"><code>df = pd.read_csv('./stock_csvs/MSFT.csv')</code></pre>
+    <p>Now that we have our dataframe object we can manipulate it in a variety of ways. Below are some useful functions to know when working with dataframes</p>
+    <ul>
+        <li><code>df['Column Name']</code> : This function returns the column specified in the argument</li>
+        <li><code>df.head()</code>returns the top rows of our DataFrame Object</li>
+        <li><code>df.tail()</code>returns the bottom rows of our DataFrame Object</li>
+        <li><code>df.shape()</code> : returns the shape of the Dataframe (i.e. number of rows x number of columns</li>
+        <li><code>df.drop(['column1']</code>, 1, inplace=True) : This function drops the list of columns given as arguments, from the dataframe</li>
+        <li><code>pd.concat([df1, df2])</code> : This function is used to merge together two dataframes</li>
+    </ul>
+    <p>Now that you have a grasp of the basics let's apply some of them to our dataframe</p>
+    <pre class = "prettyprint lang-py"><code>
+    #Print the shape of our dataframe
+    print(df.shape())
+
+    #Print the head of our Dataframe to get some more information about the columns and the data 
+    print(df.head())
+    </code></pre>
+    <p>During those series we will be concerned ony with the Price of our stocks on each Date. As such we can drop all other unecessary columns from our dataframe.</p>
+    <pre class = "prettyprint lang-py"><code>
+    # Drop unecessary columns
+    df.drop(['Open', 'High', 'Low', 'Close', 'Volume'], 1, inplace=True)
+    </code></pre>
+    <p>Now that we have a basic understanding of dataframes let's create a function that will combine all of our csv data into one dataframe. To do that we will use a loop to go through all the different tickers obtain a dataframe for them and then merge that with a main DataFrame that will hold al of the information. Here is how we can implement that</p>
+    <pre class = "prettyprint lang-py"><code>
+    #function to compile data in usable form
+    def compile_data(tickers):
+        #initialize a mian dataframe
+        main_df = pd.DataFrame()
+        #go through all the tickers
+        for ticker in tickers:
+            #convert the .csv file to a dataframe and drop the unecessary column
+            df = pd.read_csv('./stock_csvs/{}.csv'.format(ticker))
+            df.drop(['Open', 'High', 'Low', 'Close', 'Volume'], 1, inplace=True)
+            #Add a new column with the ticker name and merge with the main dataframe
+            df['Ticker']=ticker
+            main_df = pd.concat([main_df, df])
+
+        main_df = main_df.reset_index()
+        main_df.drop(['index'], 1, inplace=True)
+        
+        return main_df
+    </code></pre>
+    <p>As simple as that! Now that we have our function we can directly pass a list of tickers and look at the final result.</p>
+    <pre class = "prettyprint lang-py"><code>
+    main_df = compile_data(tickers)
+    print(main_df.shape())
+    print(main_df.head())
+    </code></pre>
+    <h2>Closing</h2>
+    <p>I will now leave it up to you to make sense of the data and by all means have a play with it. Additionally I will encourage you to take a look at the pandas documentation which you can find <a href="http://pandas.pydata.org/pandas-docs/stable/" target="_blank">here</a> and definetely try manipulating the data in different ways in order to familiarize yourself as much as possible. Again it worth stressing that using Pandas is a very seful skill to have and will definetely serve you well in the future.</p>
+    <p>Thank you very much for listening and I hope to see you back for Part 2 where we will be using all that we have learned to do some basic Markowitz Portfolio optimization
+        <br></br>
+        Lots of engineering love,
+        <br></br>
+        Theo
+    </p>
+</body>
