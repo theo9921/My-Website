@@ -108,16 +108,4 @@ html, h1, h2, h3, h4, h5, h6, a {
         background-attachment: scroll !important;
         background-position: center center !important;
     }
-    .about {
-        background-attachment: scroll !important;
-        background-position: center center !important;
-    }
-    .work-exp {
-        background-attachment: scroll !important;
-        background-position: center center !important;
-    }
-    .contact-form {
-        background-attachment: scroll !important;
-        background-position: center center !important;
-    }
 }
