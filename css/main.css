@@ -415,6 +415,16 @@ html, h1, h2, h3, h4, h5, h6, a {
     font-size: 4em;
 }
 
+.blog .button{
+    text-align: center;
+}
+
+.blog button {
+    border: 1px solid #F97300;
+    background: rgba(249, 116, 0, 0.781);
+    color: #fff;
+}
+
 
 
 /* phones*/

@@ -9,7 +9,7 @@ html, h1, h2, h3, h4, h5, h6, a {
 /*header style*/
 
 .header {
-    background-image: url('../images/headerback5.jpg');
+    background-image: url('../images/blog_headerback.jpg');
     background-repeat: no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -40,7 +40,6 @@ html, h1, h2, h3, h4, h5, h6, a {
     line-height: 1.5;
 }
 
-
 /*Blog*/
 
 .blog {
@@ -48,7 +47,6 @@ html, h1, h2, h3, h4, h5, h6, a {
     padding: 0.5em;
     position: relative;
 }
-
 
 .blog h1 {
     color: rgba(32, 32, 32, 0.815);
@@ -58,7 +56,50 @@ html, h1, h2, h3, h4, h5, h6, a {
     font-size: 4em;
 }
 
+/* Contact Form */
 
+.contact-form {
+    padding: 2em;
+    margin-top: 3em;
+    position: relative;
+    background-image: url('../images/footer.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.contact-form .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(82, 82, 82, 0.418);
+    z-index: 0;
+    color: white;
+}
+
+.contact-form h1 {
+    margin: 0.1em;
+    color: rgb(240, 236, 233);
+    font-family: 'Oleo Script', Helvetica, sans-serif;
+    font-size: 4em;
+}
+
+.contact-form .right {
+    max-width: 600px;
+}
+
+.contact-form .right .btn-secondary {
+    background: #F97300;
+    color: #fff;
+    border: 0;
+}
+
+.contact-form .right .form-control::placeholder {
+    color: #888;
+    font-size: 16px;
+}
 
 /* phones*/
 
