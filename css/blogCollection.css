@@ -20,8 +20,7 @@ html, h1, h2, h3, h4, h5, h6, a {
     padding: 120px 0 120px 0;
 }
 
-.des-welcome {
-    position: absolute;
+.des-welcome : absolute;
     top: 20%;
     bottom: 10%;
     margin: 0.2em;
@@ -35,7 +34,7 @@ html, h1, h2, h3, h4, h5, h6, a {
 
 .des-welcome p {
     color: rgb(255, 255, 255);
-    font-size: 26px;
+    font-size: 20px;
     width: 50%;
     line-height: 1.5;
 }

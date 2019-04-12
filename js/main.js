@@ -1,5 +1,4 @@
 //Header adjust
-
 $(document).ready(function () {
 	$('.header').height($(window).height());
 })
