@@ -20,7 +20,8 @@ html, h1, h2, h3, h4, h5, h6, a {
     padding: 120px 0 120px 0;
 }
 
-.des-welcome : absolute;
+.des-welcome {
+    position: absolute;
     top: 20%;
     bottom: 10%;
     margin: 0.2em;
